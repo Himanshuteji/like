@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For My Love, Unnati</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(135deg, #fdf2f8 0%, #ffffff 50%, #fce7f3 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Floating Hearts Background */
+    .hearts-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      opacity: 0.2;
+      animation: float 15s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.2;
+      }
+      50% {
+        transform: translateY(-100vh) rotate(180deg);
+        opacity: 0.5;
+      }
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    .header-content {
+      display: inline-block;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      color: #be123c;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .header-hearts {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .heart-icon {
+      font-size: 32px;
+      animation: pulse 1.5s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    .heart-icon:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .heart-icon:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .heart-icon:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Main Content */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    section {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(4px);
+      border-radius: 24px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      margin-bottom: 40px;
+      border: 1px solid #fbf1f5;
+      animation: slideUp 1s ease-out;
+    }
+
+    section:nth-of-type(2) {
+      animation-delay: 0.2s;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Love Letter */
+    .love-letter {
+      color: #374151;
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+
+    .love-letter p {
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    .love-letter p:first-of-type::first-letter {
+      font-size: 3.5rem;
+      font-weight: bold;
+      color: #f43f5e;
+      float: left;
+      margin-right: 8px;
+      line-height: 1;
+    }
+
+    .signature {
+      text-align: right;
+      margin-top: 40px;
+      color: #be123c;
+      font-weight: 600;
+    }
+
+    .signature-name {
+      font-size: 1.4rem;
+    }
+
+    /* Photo Gallery */
+    .gallery-header {
+      font-size: 2rem;
+      color: #be123c;
+      text-align: center;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .gallery-header::after {
+      content: '❤️';
+      font-size: 1.8rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .photo-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      height: 320px;
+    }
+
+    .photo-card:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+      transform: scale(1.05);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .photo-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(120, 53, 56, 0.5), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .photo-card:hover .photo-overlay {
+      opacity: 1;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .footer-message {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(4px);
+      border-radius: 9999px;
+      padding: 16px 32px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      border: 1px solid #fbf1f5;
+    }
+
+    .footer-message p {
+      font-size: 1.4rem;
+      color: #be123c;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-heart {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    /* Audio Player */
+    audio {
+      display: none;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      section {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .love-letter {
+        font-size: 1rem;
+      }
+
+      .footer-message p {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 40px 15px 30px;
+      }
+
+      section {
+        padding: 20px 15px;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .gallery-header {
+        font-size: 1.5rem;
+      }
+
+      .heart-icon {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts-background" id="heartsContainer"></div>
+
+  <div class="container">
+    <header>
+      <div class="header-content">
+        <h1>For My Love, Unnati</h1>
+        <div class="header-hearts">
+          <span class="heart-icon">❤️</span>
+          <span class="heart-icon">💕</span>
+          <span class="heart-icon">❤️</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <div class="love-letter">
+          <p>My dearest Unnati,</p>
+
+          <p>
+            From the moment you walked into my life, everything changed.
+            Your smile has a way of lighting up even the dullest days,
+            and your presence feels like home to my heart.
+          </p>
+
+          <p>
+            Every little moment with you — whether it's a random chat, a walk, or just sitting in silence — feels priceless.
+            You've shown me what real care, warmth, and love mean.
+          </p>
+
+          <p>
+            I made this little corner of the internet just for you —
+            to remind you that no matter where we are,
+            my love for you will always grow stronger with each passing day.
+          </p>
+
+          <p>
+            You are not just my girlfriend, Unnati —
+            you are my peace, my happiness, my forever.
+          </p>
+
+          <div class="signature">
+            Forever yours,<br>
+            <span class="signature-name">Himanshu Teji</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="gallery-header">Our Memories</h2>
+
+        <div class="gallery">
+          <div class="photo-card">
+            <img src="./p1.jpg" alt="Our Beautiful Moment" />
+            <div class="photo-overlay"></div>
+          </div>
+
+          <div class="photo-card">
+            <img src="./p2.jpg" alt="Sweet Memories" />
+            <div class="photo-overlay"></div>
+          </div>
+
+          <div class="photo-card">
+            <img src="./p3.jpg" alt="Us Together" />
+            <div class="photo-overlay"></div>
+          </div>
+
+          <div class="photo-card">
+            <img src="./p4.jpg" alt="Forever Together" />
+            <div class="photo-overlay"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-message">
+        <p>
+          Forever Yours – Himanshu
+          <span class="footer-heart">💖</span>
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_4a463f402e.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    function createFloatingHearts() {
+      const container = document.getElementById('heartsContainer');
+      const heartEmojis = ['❤️', '💕', '💖', '🌹'];
+
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.fontSize = '24px';
+        heart.style.animationDelay = Math.random() * 5 + 's';
+
+        container.appendChild(heart);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', createFloatingHearts);
+  </script>
+</body>
+</html>
